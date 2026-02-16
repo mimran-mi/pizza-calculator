@@ -28,20 +28,25 @@ export default function PizzaCalculator() {
     const breadFlourTotal = totalFlour * (breadFlour / 100);
     const wholeWheatTotal = totalFlour * (wholeWheat / 100);
     
-    const poolishFlour = totalFlour * (poolishPercent / 100);
-    const poolishWater = poolishFlour;
+    // Poolish flour distributed proportionally based on flour mix
+    const poolishFlourTotal = totalFlour * (poolishPercent / 100);
+    const poolishBreadFlour = poolishFlourTotal * (breadFlour / 100);
+    const poolishWholeWheat = poolishFlourTotal * (wholeWheat / 100);
+    const poolishWater = poolishFlourTotal; // 100% hydration
     const poolishYeast = totalYeast;
     
+    // Final dough
     const finalWater = totalWater - poolishWater;
-    const finalBreadFlour = breadFlourTotal - poolishFlour;
-    const finalWholeWheat = wholeWheatTotal;
+    const finalBreadFlour = breadFlourTotal - poolishBreadFlour;
+    const finalWholeWheat = wholeWheatTotal - poolishWholeWheat;
     const finalSalt = totalSalt;
     
     setRecipe({
       poolish: {
         yeast: poolishYeast,
         water: poolishWater,
-        breadFlour: poolishFlour
+        breadFlour: poolishBreadFlour,
+        wholeWheat: poolishWholeWheat
       },
       final: {
         water: finalWater,
@@ -55,12 +60,19 @@ export default function PizzaCalculator() {
         salt: totalSalt,
         yeast: totalYeast,
         dough: totalDough,
-        poolishWeight: poolishFlour + poolishWater + poolishYeast
+        poolishWeight: poolishFlourTotal + poolishWater + poolishYeast
       }
     });
   };
 
   const round = (num) => Math.round(num * 10) / 10;
+  
+  const formatWeight = (grams) => {
+    if (grams >= 1000) {
+      return `${(grams / 1000).toFixed(2)}kg`;
+    }
+    return `${round(grams)}g`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
@@ -97,7 +109,7 @@ export default function PizzaCalculator() {
                     type="range"
                     value={numPizzas}
                     min={1}
-                    max={20}
+                    max={400}
                     step={1}
                     onChange={(e) => setNumPizzas(Number(e.target.value))}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
@@ -196,19 +208,27 @@ export default function PizzaCalculator() {
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Yeast</span>
-                    <span className="font-mono font-bold">{round(recipe.poolish?.yeast)}g</span>
+                    <span className="font-mono font-bold">{formatWeight(recipe.poolish?.yeast)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Water</span>
-                    <span className="font-mono font-bold">{round(recipe.poolish?.water)}g</span>
+                    <span className="font-mono font-bold">{formatWeight(recipe.poolish?.water)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Bread Flour</span>
-                    <span className="font-mono font-bold">{round(recipe.poolish?.breadFlour)}g</span>
-                  </div>
+                  {recipe.poolish?.breadFlour > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">Bread Flour</span>
+                      <span className="font-mono font-bold">{formatWeight(recipe.poolish?.breadFlour)}</span>
+                    </div>
+                  )}
+                  {recipe.poolish?.wholeWheat > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">WW Flour</span>
+                      <span className="font-mono font-bold">{formatWeight(recipe.poolish?.wholeWheat)}</span>
+                    </div>
+                  )}
                   <div className="pt-3 mt-3 border-t-2 border-orange-100 flex justify-between font-bold">
                     <span className="text-gray-700">Total</span>
-                    <span className="font-mono text-orange-600 text-lg">{round(recipe.totals?.poolishWeight)}g</span>
+                    <span className="font-mono text-orange-600 text-lg">{formatWeight(recipe.totals?.poolishWeight)}</span>
                   </div>
                 </div>
               </div>
@@ -227,19 +247,23 @@ export default function PizzaCalculator() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Water</span>
-                    <span className="font-mono font-bold">{round(recipe.final?.water)}g</span>
+                    <span className="font-mono font-bold">{formatWeight(recipe.final?.water)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Bread Flour</span>
-                    <span className="font-mono font-bold">{round(recipe.final?.breadFlour)}g</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">WW Flour</span>
-                    <span className="font-mono font-bold">{round(recipe.final?.wholeWheat)}g</span>
-                  </div>
+                  {recipe.final?.breadFlour > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">Bread Flour</span>
+                      <span className="font-mono font-bold">{formatWeight(recipe.final?.breadFlour)}</span>
+                    </div>
+                  )}
+                  {recipe.final?.wholeWheat > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">WW Flour</span>
+                      <span className="font-mono font-bold">{formatWeight(recipe.final?.wholeWheat)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Salt (2%)</span>
-                    <span className="font-mono font-bold">{round(recipe.final?.salt)}g</span>
+                    <span className="font-mono font-bold">{formatWeight(recipe.final?.salt)}</span>
                   </div>
                 </div>
               </div>
@@ -254,7 +278,7 @@ export default function PizzaCalculator() {
                 <ol className="space-y-4 text-sm leading-relaxed">
                   <li className="flex gap-4">
                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">1</span>
-                    <p className="text-gray-700">Mix <span className="font-semibold text-orange-600">Poolish</span> and ferment <span className="font-medium">8-12 hours</span> at 60-80°F until tripled and bubbly.</p>
+                    <p className="text-gray-700">Mix <span className="font-semibold text-orange-600">Poolish</span> and ferment <span className="font-medium">8-12 hours</span> at 15-27°C (60-80°F) until tripled and bubbly.</p>
                   </li>
                   <li className="flex gap-4">
                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">2</span>
@@ -262,10 +286,14 @@ export default function PizzaCalculator() {
                   </li>
                   <li className="flex gap-4">
                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">3</span>
-                    <p className="text-gray-700">Perform slap and folds. Bulk ferment <span className="font-medium">1 hour</span> until active.</p>
+                    <p className="text-gray-700">Perform slap and folds. Rest for <span className="font-medium">30 mins</span>.</p>
                   </li>
                   <li className="flex gap-4">
                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">4</span>
+                    <p className="text-gray-700">Round the dough. Bulk ferment <span className="font-medium">1 hour</span> until active.</p>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">5</span>
                     <p className="text-gray-700">Divide into {numPizzas} balls ({pizzaWeight}g). Proof <span className="font-medium">1-2 hours</span> before baking.</p>
                   </li>
                 </ol>
@@ -277,11 +305,11 @@ export default function PizzaCalculator() {
               <div className="flex items-center justify-between">
                 <div className="flex flex-col">
                   <span className="text-xs uppercase font-bold tracking-widest opacity-90">Total Batch</span>
-                  <span className="text-4xl font-black font-mono tracking-tight">{round(recipe.totals?.dough)}g</span>
+                  <span className="text-4xl font-black font-mono tracking-tight">{formatWeight(recipe.totals?.dough)}</span>
                 </div>
                 <div className="flex flex-col text-right">
                   <span className="text-xs uppercase font-bold tracking-widest opacity-90">Total Flour</span>
-                  <span className="text-2xl font-bold font-mono">{round(recipe.totals?.flour)}g</span>
+                  <span className="text-2xl font-bold font-mono">{formatWeight(recipe.totals?.flour)}</span>
                 </div>
               </div>
             </div>
