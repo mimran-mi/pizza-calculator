@@ -109,7 +109,7 @@ export default function PizzaCalculator() {
                     type="range"
                     value={numPizzas}
                     min={1}
-                    max={400}
+                    max={100}
                     step={1}
                     onChange={(e) => setNumPizzas(Number(e.target.value))}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
