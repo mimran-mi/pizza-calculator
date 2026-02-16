@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator } from 'lucide-react';
+import { Calculator, Beaker, Utensils, ChefHat } from 'lucide-react';
 
 export default function PizzaCalculator() {
   const [numPizzas, setNumPizzas] = useState(4);
+  const [pizzaWeight, setPizzaWeight] = useState(273);
   const [hydration, setHydration] = useState(62);
   const [breadFlour, setBreadFlour] = useState(80);
   const [wholeWheat, setWholeWheat] = useState(20);
-  const [pizzaWeight, setPizzaWeight] = useState(273);
   const [poolishPercent, setPoolishPercent] = useState(30);
-  
   const [recipe, setRecipe] = useState({});
 
   useEffect(() => {
-     calculateRecipe();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [numPizzas, hydration, breadFlour, wholeWheat, pizzaWeight, poolishPercent]);
+    calculateRecipe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numPizzas, hydration, breadFlour, wholeWheat, pizzaWeight, poolishPercent]);
 
   const calculateRecipe = () => {
     const totalDough = numPizzas * pizzaWeight;
@@ -64,191 +63,229 @@ export default function PizzaCalculator() {
   const round = (num) => Math.round(num * 10) / 10;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-orange-50 to-amber-50 min-h-screen">
-      <div className="bg-white rounded-lg shadow-lg p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <Calculator className="text-orange-600" size={32} />
-          <h1 className="text-3xl font-bold text-gray-800">Pizza Dough Calculator</h1>
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Settings</h2>
-            
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <div className="max-w-6xl mx-auto p-4 md:p-8">
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 bg-orange-600 rounded-xl text-white shadow-lg">
+              <ChefHat size={32} />
+            </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Number of Pizzas
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="20"
-                value={numPizzas}
-                onChange={(e) => setNumPizzas(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Pizza Weight (g)
-              </label>
-              <input
-                type="number"
-                min="100"
-                max="500"
-                value={pizzaWeight}
-                onChange={(e) => setPizzaWeight(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Hydration (%)
-              </label>
-              <input
-                type="number"
-                min="50"
-                max="80"
-                value={hydration}
-                onChange={(e) => setHydration(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Poolish (% of total flour)
-              </label>
-              <input
-                type="number"
-                min="20"
-                max="50"
-                value={poolishPercent}
-                onChange={(e) => setPoolishPercent(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              />
-              <p className="text-xs text-gray-500 mt-1">Typical range: 20-40%</p>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Bread Flour (%)
-              </label>
-              <input
-                type="number"
-                min="0"
-                max="100"
-                value={breadFlour}
-                onChange={(e) => {
-                  const val = Number(e.target.value);
-                  setBreadFlour(val);
-                  setWholeWheat(100 - val);
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Whole Wheat Flour (%)
-              </label>
-              <input
-                type="number"
-                min="0"
-                max="100"
-                value={wholeWheat}
-                onChange={(e) => {
-                  const val = Number(e.target.value);
-                  setWholeWheat(val);
-                  setBreadFlour(100 - val);
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-orange-50 p-4 rounded-lg">
-              <h2 className="text-xl font-semibold text-gray-700 mb-3">Poolish</h2>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Active Dry Yeast:</span>
-                  <span className="font-medium">{round(recipe.poolish?.yeast)}g</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Water:</span>
-                  <span className="font-medium">{round(recipe.poolish?.water)}g</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Bread Flour:</span>
-                  <span className="font-medium">{round(recipe.poolish?.breadFlour)}g</span>
-                </div>
-                <div className="flex justify-between border-t pt-2 mt-2">
-                  <span className="text-gray-600 font-medium">Total Poolish:</span>
-                  <span className="font-medium">{round(recipe.totals?.poolishWeight)}g</span>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500 mt-3 italic">Ferment 8-12 hours at 60-80°F</p>
-            </div>
-
-            <div className="bg-amber-50 p-4 rounded-lg">
-              <h2 className="text-xl font-semibold text-gray-700 mb-3">Final Dough</h2>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">All the poolish</span>
-                  <span className="font-medium">↑</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Water:</span>
-                  <span className="font-medium">{round(recipe.final?.water)}g</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Bread Flour:</span>
-                  <span className="font-medium">{round(recipe.final?.breadFlour)}g</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Whole Wheat Flour:</span>
-                  <span className="font-medium">{round(recipe.final?.wholeWheat)}g</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Salt:</span>
-                  <span className="font-medium">{round(recipe.final?.salt)}g</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Totals</h3>
-              <div className="space-y-1 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Total Flour:</span>
-                  <span className="font-medium">{round(recipe.totals?.flour)}g</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Total Water:</span>
-                  <span className="font-medium">{round(recipe.totals?.water)}g</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Total Dough:</span>
-                  <span className="font-medium">{round(recipe.totals?.dough)}g</span>
-                </div>
-              </div>
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900">Dough Lab</h1>
+              <p className="text-gray-600">Professional poolish-based pizza engineering</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-blue-50 p-4 rounded-lg text-sm text-gray-700">
-          <h3 className="font-semibold mb-2">Instructions:</h3>
-          <ol className="list-decimal list-inside space-y-1">
-            <li>Mix the poolish and ferment 8-12 hours at 60-80°F</li>
-            <li>Mix poolish and final dough ingredients with a butter knife. Rest 30 min</li>
-            <li>Slap and fold with damp hands. Rest 30 min</li>
-            <li>Round the dough. Ferment 1 hour</li>
-            <li>Divide into {numPizzas} × {pizzaWeight}g balls. Rise 1-2 hours until doubled</li>
-            <li>Bake and enjoy!</li>
-          </ol>
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
+          {/* Parameters Card */}
+          <div className="lg:col-span-5">
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-4">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <Calculator className="h-5 w-5" /> Parameters
+                </h2>
+              </div>
+              <div className="p-6 space-y-8">
+                {/* Number of Pizzas */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold uppercase tracking-wider text-gray-600">Pizzas</label>
+                    <span className="text-lg font-mono font-bold bg-gray-100 px-3 py-1 rounded-lg">{numPizzas}</span>
+                  </div>
+                  <input 
+                    type="range"
+                    value={numPizzas}
+                    min={1}
+                    max={20}
+                    step={1}
+                    onChange={(e) => setNumPizzas(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                </div>
+
+                {/* Pizza Weight */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold uppercase tracking-wider text-gray-600">Weight (g)</label>
+                    <span className="text-lg font-mono font-bold bg-gray-100 px-3 py-1 rounded-lg">{pizzaWeight}</span>
+                  </div>
+                  <input 
+                    type="range"
+                    value={pizzaWeight}
+                    min={150}
+                    max={400}
+                    step={5}
+                    onChange={(e) => setPizzaWeight(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                </div>
+
+                {/* Hydration */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold uppercase tracking-wider text-gray-600">Hydration (%)</label>
+                    <span className="text-lg font-mono font-bold bg-gray-100 px-3 py-1 rounded-lg">{hydration}%</span>
+                  </div>
+                  <input 
+                    type="range"
+                    value={hydration}
+                    min={50}
+                    max={80}
+                    step={1}
+                    onChange={(e) => setHydration(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                </div>
+
+                {/* Poolish Percent */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold uppercase tracking-wider text-gray-600">Poolish (%)</label>
+                    <span className="text-lg font-mono font-bold bg-gray-100 px-3 py-1 rounded-lg">{poolishPercent}%</span>
+                  </div>
+                  <input 
+                    type="range"
+                    value={poolishPercent}
+                    min={10}
+                    max={50}
+                    step={1}
+                    onChange={(e) => setPoolishPercent(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                </div>
+
+                {/* Flour Mix */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold uppercase tracking-wider text-gray-600">Flour Mix</label>
+                    <div className="flex gap-2">
+                      <span className="text-xs font-mono bg-orange-100 text-orange-700 px-2 py-1 rounded font-semibold">Bread: {breadFlour}%</span>
+                      <span className="text-xs font-mono bg-amber-100 text-amber-700 px-2 py-1 rounded font-semibold">WW: {wholeWheat}%</span>
+                    </div>
+                  </div>
+                  <input 
+                    type="range"
+                    value={breadFlour}
+                    min={0}
+                    max={100}
+                    step={1}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      setBreadFlour(val);
+                      setWholeWheat(100 - val);
+                    }}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Results Section */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Poolish and Final Dough Cards */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              {/* Poolish Card */}
+              <div className="bg-white rounded-2xl shadow-lg border-2 border-orange-200 overflow-hidden">
+                <div className="bg-gradient-to-br from-orange-100 to-orange-50 px-5 py-3 border-b border-orange-200">
+                  <h3 className="text-sm font-bold flex items-center gap-2 text-orange-800 uppercase tracking-widest">
+                    <Beaker className="h-4 w-4" /> Poolish
+                  </h3>
+                </div>
+                <div className="p-5 space-y-3">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Yeast</span>
+                    <span className="font-mono font-bold">{round(recipe.poolish?.yeast)}g</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Water</span>
+                    <span className="font-mono font-bold">{round(recipe.poolish?.water)}g</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Bread Flour</span>
+                    <span className="font-mono font-bold">{round(recipe.poolish?.breadFlour)}g</span>
+                  </div>
+                  <div className="pt-3 mt-3 border-t-2 border-orange-100 flex justify-between font-bold">
+                    <span className="text-gray-700">Total</span>
+                    <span className="font-mono text-orange-600 text-lg">{round(recipe.totals?.poolishWeight)}g</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Final Dough Card */}
+              <div className="bg-white rounded-2xl shadow-lg border-2 border-amber-200 overflow-hidden">
+                <div className="bg-gradient-to-br from-amber-100 to-amber-50 px-5 py-3 border-b border-amber-200">
+                  <h3 className="text-sm font-bold flex items-center gap-2 text-amber-800 uppercase tracking-widest">
+                    <Utensils className="h-4 w-4" /> Final Dough
+                  </h3>
+                </div>
+                <div className="p-5 space-y-3">
+                  <div className="flex justify-between text-sm italic text-gray-500">
+                    <span>All Poolish</span>
+                    <span>&larr;</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Water</span>
+                    <span className="font-mono font-bold">{round(recipe.final?.water)}g</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Bread Flour</span>
+                    <span className="font-mono font-bold">{round(recipe.final?.breadFlour)}g</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">WW Flour</span>
+                    <span className="font-mono font-bold">{round(recipe.final?.wholeWheat)}g</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Salt (2%)</span>
+                    <span className="font-mono font-bold">{round(recipe.final?.salt)}g</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Instructions Card */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-gray-100 to-gray-50 px-6 py-4 border-b border-gray-200">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-gray-700">Preparation Protocol</h3>
+              </div>
+              <div className="p-6">
+                <ol className="space-y-4 text-sm leading-relaxed">
+                  <li className="flex gap-4">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">1</span>
+                    <p className="text-gray-700">Mix <span className="font-semibold text-orange-600">Poolish</span> and ferment <span className="font-medium">8-12 hours</span> at 60-80°F until tripled and bubbly.</p>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">2</span>
+                    <p className="text-gray-700">Combine all final dough ingredients with the poolish. Rest for <span className="font-medium">30 mins</span> (autolyse).</p>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">3</span>
+                    <p className="text-gray-700">Perform slap and folds. Bulk ferment <span className="font-medium">1 hour</span> until active.</p>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">4</span>
+                    <p className="text-gray-700">Divide into {numPizzas} balls ({pizzaWeight}g). Proof <span className="font-medium">1-2 hours</span> before baking.</p>
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            {/* Summary Bar */}
+            <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-2xl shadow-xl p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  <span className="text-xs uppercase font-bold tracking-widest opacity-90">Total Batch</span>
+                  <span className="text-4xl font-black font-mono tracking-tight">{round(recipe.totals?.dough)}g</span>
+                </div>
+                <div className="flex flex-col text-right">
+                  <span className="text-xs uppercase font-bold tracking-widest opacity-90">Total Flour</span>
+                  <span className="text-2xl font-bold font-mono">{round(recipe.totals?.flour)}g</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
