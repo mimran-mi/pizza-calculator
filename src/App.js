@@ -83,8 +83,8 @@ export default function PizzaCalculator() {
               <ChefHat size={32} />
             </div>
             <div>
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900">Dough Lab</h1>
-              <p className="text-gray-600">Professional poolish-based pizza engineering</p>
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900">Pizza Dough Calculator</h1>
+              <p className="text-gray-600">Poolish-based Neapolitan-style pizza</p>
             </div>
           </div>
         </div>
