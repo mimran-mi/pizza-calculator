@@ -12,8 +12,9 @@ export default function PizzaCalculator() {
   const [recipe, setRecipe] = useState({});
 
   useEffect(() => {
-    calculateRecipe();
-  }, [numPizzas, hydration, breadFlour, wholeWheat, pizzaWeight, poolishPercent]);
+     calculateRecipe();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [numPizzas, hydration, breadFlour, wholeWheat, pizzaWeight, poolishPercent]);
 
   const calculateRecipe = () => {
     const totalDough = numPizzas * pizzaWeight;
