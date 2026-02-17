@@ -9,3 +9,13 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// Register service worker for PWA support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/pizza-calculator/service-worker.js')
+      .then((reg) => console.log('Service Worker registered:', reg))
+      .catch((err) => console.log('Service Worker registration failed:', err));
+  });
+}
