@@ -300,16 +300,23 @@ export default function PizzaCalculator() {
               </div>
             </div>
 
-            {/* Summary Bar */}
-            <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-2xl shadow-xl p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex flex-col">
-                  <span className="text-xs uppercase font-bold tracking-widest opacity-90">Total Batch</span>
-                  <span className="text-4xl font-black font-mono tracking-tight">{formatWeight(recipe.totals?.dough)}</span>
+            {/* Summary Card */}
+            <div className="bg-white rounded-2xl shadow-lg border-2 border-orange-200 overflow-hidden">
+              <div className="bg-gradient-to-br from-orange-100 to-amber-50 px-5 py-3 border-b border-orange-200">
+                <h3 className="text-sm font-bold text-orange-800 uppercase tracking-widest">Batch Summary</h3>
+              </div>
+              <div className="p-5 grid grid-cols-3 divide-x divide-orange-100">
+                <div className="flex flex-col items-center justify-center py-2 px-4">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Batch</span>
+                  <span className="text-3xl font-black font-mono text-orange-600">{formatWeight(recipe.totals?.dough)}</span>
                 </div>
-                <div className="flex flex-col text-right">
-                  <span className="text-xs uppercase font-bold tracking-widest opacity-90">Total Flour</span>
-                  <span className="text-2xl font-bold font-mono">{formatWeight(recipe.totals?.flour)}</span>
+                <div className="flex flex-col items-center justify-center py-2 px-4">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Flour</span>
+                  <span className="text-3xl font-black font-mono text-amber-600">{formatWeight(recipe.totals?.flour)}</span>
+                </div>
+                <div className="flex flex-col items-center justify-center py-2 px-4">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Per Pizza</span>
+                  <span className="text-3xl font-black font-mono text-gray-700">{formatWeight(pizzaWeight)}</span>
                 </div>
               </div>
             </div>
