@@ -241,9 +241,8 @@ export default function PizzaCalculator() {
                   </h3>
                 </div>
                 <div className="p-5 space-y-3">
-                  <div className="flex justify-between text-sm italic text-gray-500">
-                    <span>All Poolish</span>
-                    <span>&larr;</span>
+                  <div className="text-sm italic text-gray-500 pb-1 border-b border-amber-100">
+                    Add the entire poolish mixture you prepared earlier
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Water</span>
@@ -265,6 +264,27 @@ export default function PizzaCalculator() {
                     <span className="text-gray-600">Salt (2%)</span>
                     <span className="font-mono font-bold">{formatWeight(recipe.final?.salt)}</span>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Summary Card */}
+            <div className="bg-white rounded-2xl shadow-lg border-2 border-orange-200 overflow-hidden">
+              <div className="bg-gradient-to-br from-orange-100 to-amber-50 px-5 py-3 border-b border-orange-200">
+                <h3 className="text-sm font-bold text-orange-800 uppercase tracking-widest">Batch Summary</h3>
+              </div>
+              <div className="p-5 grid grid-cols-3 divide-x divide-orange-100">
+                <div className="flex flex-col items-center justify-center py-2 px-4">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Batch</span>
+                  <span className="text-3xl font-black font-mono text-orange-600">{formatWeight(recipe.totals?.dough)}</span>
+                </div>
+                <div className="flex flex-col items-center justify-center py-2 px-4">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Flour</span>
+                  <span className="text-3xl font-black font-mono text-amber-600">{formatWeight(recipe.totals?.flour)}</span>
+                </div>
+                <div className="flex flex-col items-center justify-center py-2 px-4">
+                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Per Pizza</span>
+                  <span className="text-3xl font-black font-mono text-gray-700">{formatWeight(pizzaWeight)}</span>
                 </div>
               </div>
             </div>
@@ -297,27 +317,6 @@ export default function PizzaCalculator() {
                     <p className="text-gray-700">Divide into {numPizzas} balls ({pizzaWeight}g). Proof <span className="font-medium">1-2 hours</span> before baking.</p>
                   </li>
                 </ol>
-              </div>
-            </div>
-
-            {/* Summary Card */}
-            <div className="bg-white rounded-2xl shadow-lg border-2 border-orange-200 overflow-hidden">
-              <div className="bg-gradient-to-br from-orange-100 to-amber-50 px-5 py-3 border-b border-orange-200">
-                <h3 className="text-sm font-bold text-orange-800 uppercase tracking-widest">Batch Summary</h3>
-              </div>
-              <div className="p-5 grid grid-cols-3 divide-x divide-orange-100">
-                <div className="flex flex-col items-center justify-center py-2 px-4">
-                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Batch</span>
-                  <span className="text-3xl font-black font-mono text-orange-600">{formatWeight(recipe.totals?.dough)}</span>
-                </div>
-                <div className="flex flex-col items-center justify-center py-2 px-4">
-                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Flour</span>
-                  <span className="text-3xl font-black font-mono text-amber-600">{formatWeight(recipe.totals?.flour)}</span>
-                </div>
-                <div className="flex flex-col items-center justify-center py-2 px-4">
-                  <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Per Pizza</span>
-                  <span className="text-3xl font-black font-mono text-gray-700">{formatWeight(pizzaWeight)}</span>
-                </div>
               </div>
             </div>
           </div>
