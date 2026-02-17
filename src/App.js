@@ -273,18 +273,18 @@ export default function PizzaCalculator() {
               <div className="bg-gradient-to-br from-orange-100 to-amber-50 px-5 py-3 border-b border-orange-200">
                 <h3 className="text-sm font-bold text-orange-800 uppercase tracking-widest">Batch Summary</h3>
               </div>
-              <div className="p-5 grid grid-cols-3 divide-x divide-orange-100">
-                <div className="flex flex-col items-center justify-center py-2 px-4">
+              <div className="p-5 grid grid-cols-1 sm:grid-cols-3 sm:divide-x divide-orange-100 gap-4 sm:gap-0">
+                <div className="flex flex-col items-center justify-center py-2 px-4 border-b sm:border-b-0 border-orange-100">
                   <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Batch</span>
-                  <span className="text-3xl font-black font-mono text-orange-600">{formatWeight(recipe.totals?.dough)}</span>
+                  <span className="text-2xl sm:text-3xl font-black font-mono text-orange-600">{formatWeight(recipe.totals?.dough)}</span>
                 </div>
-                <div className="flex flex-col items-center justify-center py-2 px-4">
+                <div className="flex flex-col items-center justify-center py-2 px-4 border-b sm:border-b-0 border-orange-100">
                   <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Total Flour</span>
-                  <span className="text-3xl font-black font-mono text-amber-600">{formatWeight(recipe.totals?.flour)}</span>
+                  <span className="text-2xl sm:text-3xl font-black font-mono text-amber-600">{formatWeight(recipe.totals?.flour)}</span>
                 </div>
                 <div className="flex flex-col items-center justify-center py-2 px-4">
                   <span className="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-1">Per Pizza</span>
-                  <span className="text-3xl font-black font-mono text-gray-700">{formatWeight(pizzaWeight)}</span>
+                  <span className="text-2xl sm:text-3xl font-black font-mono text-gray-700">{formatWeight(pizzaWeight)}</span>
                 </div>
               </div>
             </div>
