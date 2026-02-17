@@ -1,0 +1,25 @@
+{
+  "short_name": "Pizza Calc",
+  "name": "Pizza Dough Calculator",
+  "description": "Poolish-based Neapolitan-style pizza dough calculator",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#ea580c",
+  "background_color": "#fff7ed",
+  "categories": ["food", "utilities"]
+}
